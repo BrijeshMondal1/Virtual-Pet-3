@@ -4,6 +4,8 @@ html, body {
 }
 canvas{
   border: 2px solid black;
-  margin-top:50px;
-  margin-left: 350px;
+  margin-top:20px;
+  margin-bottom:20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
