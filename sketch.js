@@ -1,7 +1,9 @@
 var dog, dogImg1, dogImg2, dogSound1, dogSound2, dogSound3;
+var bedRoom, garden, livingRoom, washRoom
 var canvas;
 var food;
 var foodS = 20;
+var gameState = "hungry";
 var state = "normal";
 
 function preload(){
@@ -11,6 +13,11 @@ function preload(){
   dogSound1 = loadSound("barking dog.mp3");
   dogSound2 = loadSound("barking dog 2.mp3");
   dogSound3 = loadSound("whining dog.mp3");
+
+  bedRoom = loadImage("images/Bed Room.png");
+  garden = loadImage("images/Garden.png");
+  livingRoom = loadImage("images/Living Room.png");
+  washRoom = loadImage("images/Wash Room.png");
 
 }
 
@@ -40,20 +47,39 @@ function setup() {
 
 function draw() {  
 
-  background(46, 139, 87);
+  currentTime = hour();
 
   food.display();
 
   drawSprites();
 
+  if(gameState === "hungry"){
+
   fill("red");
   text("Food remaining : " + foodS, width/2, 50);
+
+  }
+       
+  if(gameState !== "hungry"){
+
+    feedPetButton.hide();
+    addFoodButton.hide();
+    dog.remove();
+
+ }else {
+
+  feedPetButton.show();
+  addFoodButton.show();
+  
+  dog.addImage(dogImg1);
+
+ }
 
 }
 
 function deductFood(){
 
-  if(foodS !== 0){
+  if(foodS !== 0 && gameState === "hungry"){
 
     foodS--;
     state = "happy";
@@ -73,7 +99,7 @@ function deductFood(){
 
       }
 
-    }else{
+    }else if(foodS === 0 && gameState === "hungry"){
 
       dogSound3.play();
 
@@ -89,7 +115,7 @@ function deductFood(){
 
 function addFood(){
  
-  if(foodS < 20){
+  if(foodS < 20 && gameState === "hungry"){
 
     foodS++;
     food.updateFoodStock(foodS);
